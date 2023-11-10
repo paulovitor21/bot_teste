@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.ie.options import Options as IeOptions
 
-# Caminho para o executável do Microsoft Edge (msedgedriver.exe)
+# Caminho para o driver do Internet Explorer (IEDriverServer.exe)
 msedge_driver_path = 'IEDriverServer.exe'
 
 # Configuração do Internet Explorer Options
