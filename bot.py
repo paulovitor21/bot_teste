@@ -1,78 +1,45 @@
-# Import for the Web Bot
-from botcity.web import WebBot, Browser, By
+import numpy as np
+from keras.datasets import mnist
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from keras.utils import to_categorical
 
-# Import for integration with BotCity Maestro SDK
-from botcity.maestro import *
+# Carregar dados do MNIST
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-import os
-import subprocess
-import sys
+# Pré-processamento dos dados
+x_train = x_train.astype('float32') / 255.0
+x_test = x_test.astype('float32') / 255.0
 
-#import pytest
-from selenium import webdriver
+x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
+x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
 
-# Disable errors if we are not connected to Maestro
-BotMaestroSDK.RAISE_NOT_CONNECTED = False
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
 
-edge_driver_path = 'IEDriverServer.exe'
+# Criar o modelo CNN
+model = Sequential()
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Flatten())
+model.add(Dense(units=128, activation='relu'))
+model.add(Dense(units=10, activation='softmax'))
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-def test_basic_options_win10(edge_bin):
-    options = webdriver.IeOptions()
-    options.attach_to_edge_chrome = True
-    options.edge_executable_path = edge_bin
-    driver = edge_driver_path
+# Treinar o modelo
+model.fit(x_train, y_train, epochs=5, batch_size=64, validation_data=(x_test, y_test))
 
+# Analisar o modelo
+loss, accuracy = model.evaluate(x_test, y_test)
+print(f"Acurácia do modelo nos dados de teste: {accuracy * 100:.2f}%")
 
+# Fazer previsões e análise dos resultados
+predictions = model.predict(x_test)
+predicted_labels = np.argmax(predictions, axis=1)
+true_labels = np.argmax(y_test, axis=1)
 
-
-def main():
-    # Runner passes the server url, the id of the task being executed,
-    # the access token and the parameters that this task receives (when applicable).
-    maestro = BotMaestroSDK.from_sys_args()
-    ## Fetch the BotExecution with details from the task, including parameters
-    execution = maestro.get_execution()
-
-    print(f"Task ID is: {execution.task_id}")
-    print(f"Task Parameters are: {execution.parameters}")
-
-    bot = WebBot()
-
-    # Configure whether or not to run on headless mode
-    bot.headless = False
-
-    test_basic_options_win10(edge_bin=r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe')
-
-    # Uncomment to change the default Browser to Firefox
-    # bot.browser = Browser.FIREFOX
-
-    # Uncomment to set the WebDriver path
-    # bot.driver_path = "<path to your WebDriver binary>"
-
-    # Opens the BotCity website.
-    bot.browse("https://www.botcity.dev")
-
-    # Implement here your logic...
-    ...
-
-    # Wait 3 seconds before closing
-    bot.wait(3000)
-
-    # Finish and clean up the Web Browser
-    # You MUST invoke the stop_browser to avoid
-    # leaving instances of the webdriver open
-    bot.stop_browser()
-
-    # Uncomment to mark this task as finished on BotMaestro
-    # maestro.finish_task(
-    #     task_id=execution.task_id,
-    #     status=AutomationTaskFinishStatus.SUCCESS,
-    #     message="Task Finished OK."
-    # )
-
-
-def not_found(label):
-    print(f"Element not found: {label}")
-
-
-if __name__ == '__main__':
-    main()
+# Exemplo de análise de algumas previsões
+for i in range(10):
+    print(f"Predicted label: {predicted_labels[i]}, True label: {true_labels[i]}")
