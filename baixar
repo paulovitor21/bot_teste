@@ -1,0 +1,4 @@
+if lista == 'all':
+    elementos = driver.find_elements_by_class_name('attach_filename')
+    for elemento in elementos:
+        elemento.click()
