@@ -2,3 +2,9 @@ if lista == 'all':
     elementos = driver.find_elements_by_class_name('attach_filename')
     for elemento in elementos:
         elemento.click()
+
+
+if lista == 'all':
+    for i in range(len(lista)):
+        lista[i].find_element_by_class_name('attach_filename').click()
+
