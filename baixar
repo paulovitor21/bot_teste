@@ -8,3 +8,10 @@ if lista == 'all':
     for i in range(len(lista)):
         lista[i].find_element_by_class_name('attach_filename').click()
 
+
+
+if lista == 'all':
+    for i in range(len(lista)):
+        webbot.wait_for_element_visibility(element=lista[i], visible=True, waiting_time=10000)
+        lista[i].find_element_by_class_name('attach_filename').click()
+
