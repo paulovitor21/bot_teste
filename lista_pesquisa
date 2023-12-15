@@ -1,0 +1,25 @@
+from botcity.web import WebBot, Browser, By
+import shutil
+
+def inbox_email(webbot, employee_user, search_queries, output_folder):
+    webbot.navigate_to("http://geusazns51.lge.com/mail8/(J.nsf/MBeFirstFrame?ReadForm".format(employee_user))
+    webbot.wait(4000)
+
+    for search_query in search_queries:
+        webbot.enter_frame("Main")
+        webbot.wait(500)
+        webbot.find_element('id_search_field_UI_INSTANCE_171', By.ID).send_keys(search_query)
+        webbot.enter()
+        webbot.wait(4000)
+
+        # Resto do seu código para processar os emails conforme necessário
+        # ...
+
+# Lista de palavras-chave para pesquisa
+search_words = ["palavra1", "palavra2", "palavra3"]
+
+# Caminho da pasta de destino para os anexos
+output_folder = "caminho/para/a/pasta/destino/"
+
+# Chama a função para pesquisar com cada palavra-chave
+inbox_email(webbot, employee_user, search_words, output_folder)
