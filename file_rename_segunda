@@ -1,0 +1,20 @@
+import os
+from datetime import datetime, timedelta
+
+def nomear_arquivo_para_segunda_feira():
+    # Obter data atual
+    data_atual = datetime.now()
+
+    # Verificar se hoje é segunda-feira, se não for, encontrar a próxima segunda-feira
+    if data_atual.weekday() != 0:  # 0 é segunda-feira
+        dias_para_segunda = (7 - data_atual.weekday()) % 7
+        data_atual += timedelta(days=dias_para_segunda)
+
+    # Formatar a data para usar no nome do arquivo
+    nome_arquivo = data_atual.strftime("%Y-%m-%d") + ".txt"
+
+    # Renomear o arquivo
+    arquivo_atual = "arquivo.txt"  # Nome do arquivo que você baixou
+    os.rename(arquivo_atual, nome_arquivo)
+
+nomear_arquivo_para_segunda_feira()
