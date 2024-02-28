@@ -1,0 +1,35 @@
+Embarque
+
+Objetivo do RPA Desenvolvido:
+
+Automatizar o processo de download de dados de notas fiscais de embarque do sistema TMS.
+Importância para o controle de operações logísticas e alcance do target para incentivos fiscais.
+Processo Automatizado:
+
+Baixar os dados das notas fiscais emitidas pelo sistema TMS.
+Armazenar os dados em um banco de dados.
+Arquitetura e Tecnologia Utilizada:
+
+Desenvolvimento do RPA utilizando Python e JavaScript.
+Integração com banco de dados PostgreSQL para armazenamento dos dados.
+Utilização da plataforma BotCity para automação do processo.
+Funcionalidades e Capacidades:
+
+Facilitar o processo de download de dados de notas fiscais de embarque.
+Garantir a atualização e confiabilidade do relatório de NF Monitoring.
+Benefícios Obtidos:
+
+Economia de tempo e redução de erros.
+Consistência e confiabilidade dos dados.
+Análise eficiente das operações logísticas e cumprimento de metas fiscais.
+Desafios Superados:
+
+Desenvolvimento de integrações com sistemas existentes.
+Garantia da segurança e confiabilidade dos dados durante o processo de automação.
+Planos Futuros:
+
+Expansão das funcionalidades do RPA para abranger outros processos relacionados.
+Implementação de melhorias contínuas para otimização do desempenho e eficiência.
+Perguntas e Respostas:
+
+Abertura para esclarecimento de dúvidas e discussão sobre o RPA desenvolvido.
